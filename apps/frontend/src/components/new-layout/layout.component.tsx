@@ -1,8 +1,8 @@
- 'use client';
+'use client';
 
-import React, { ReactNode, useCallback } from 'react';
 import { Logo } from '@gitroom/frontend/components/new-layout/logo';
 import { Plus_Jakarta_Sans } from 'next/font/google';
+import { ReactNode, useCallback } from 'react';
 const ModeComponent = dynamic(
   () => import('@gitroom/frontend/components/layout/mode.component'),
   {
@@ -10,35 +10,35 @@ const ModeComponent = dynamic(
   }
 );
 
-import clsx from 'clsx';
-import dynamic from 'next/dynamic';
-import { useFetch } from '@gitroom/helpers/utils/custom.fetch';
-import { useVariables } from '@gitroom/react/helpers/variable.context';
-import { useSearchParams } from 'next/navigation';
-import useSWR from 'swr';
-import { CheckPayment } from '@gitroom/frontend/components/layout/check.payment';
-import { ToolTip } from '@gitroom/frontend/components/layout/top.tip';
-import { ShowMediaBoxModal } from '@gitroom/frontend/components/media/media.component';
+import { CopilotKit } from '@copilotkit/react-core';
 import { ShowLinkedinCompany } from '@gitroom/frontend/components/launches/helpers/linkedin.component';
 import { MediaSettingsLayout } from '@gitroom/frontend/components/launches/helpers/media.settings.component';
-import { Toaster } from '@gitroom/react/toaster/toaster';
-import { ShowPostSelector } from '@gitroom/frontend/components/post-url-selector/post.url.selector';
-import { NewSubscription } from '@gitroom/frontend/components/layout/new.subscription';
-import { Support } from '@gitroom/frontend/components/layout/support';
-import { ContinueProvider } from '@gitroom/frontend/components/layout/continue.provider';
-import { ContextWrapper } from '@gitroom/frontend/components/layout/user.context';
-import { CopilotKit } from '@copilotkit/react-core';
-import { MantineWrapper } from '@gitroom/react/helpers/mantine.wrapper';
-import { Impersonate } from '@gitroom/frontend/components/layout/impersonate';
-import { Title } from '@gitroom/frontend/components/layout/title';
-import { TopMenu } from '@gitroom/frontend/components/layout/top.menu';
-import { LanguageComponent } from '@gitroom/frontend/components/layout/language.component';
+import { CheckPayment } from '@gitroom/frontend/components/layout/check.payment';
 import { ChromeExtensionComponent } from '@gitroom/frontend/components/layout/chrome.extension.component';
-import NotificationComponent from '@gitroom/frontend/components/notifications/notification.component';
-import { BillingAfter } from '@gitroom/frontend/components/new-layout/billing.after';
+import { ContinueProvider } from '@gitroom/frontend/components/layout/continue.provider';
+import { Impersonate } from '@gitroom/frontend/components/layout/impersonate';
+import { LanguageComponent } from '@gitroom/frontend/components/layout/language.component';
+import { NewSubscription } from '@gitroom/frontend/components/layout/new.subscription';
 import { OrganizationSelector } from '@gitroom/frontend/components/layout/organization.selector';
 import { PreConditionComponent } from '@gitroom/frontend/components/layout/pre-condition.component';
- import { AttachToFeedbackIcon } from '@gitroom/frontend/components/new-layout/sentry.feedback.component';
+import { Support } from '@gitroom/frontend/components/layout/support';
+import { Title } from '@gitroom/frontend/components/layout/title';
+import { TopMenu } from '@gitroom/frontend/components/layout/top.menu';
+import { ToolTip } from '@gitroom/frontend/components/layout/top.tip';
+import { ContextWrapper } from '@gitroom/frontend/components/layout/user.context';
+import { ShowMediaBoxModal } from '@gitroom/frontend/components/media/media.component';
+import { BillingAfter } from '@gitroom/frontend/components/new-layout/billing.after';
+import { AttachToFeedbackIcon } from '@gitroom/frontend/components/new-layout/sentry.feedback.component';
+import NotificationComponent from '@gitroom/frontend/components/notifications/notification.component';
+import { ShowPostSelector } from '@gitroom/frontend/components/post-url-selector/post.url.selector';
+import { useFetch } from '@gitroom/helpers/utils/custom.fetch';
+import { MantineWrapper } from '@gitroom/react/helpers/mantine.wrapper';
+import { useVariables } from '@gitroom/react/helpers/variable.context';
+import { Toaster } from '@gitroom/react/toaster/toaster';
+import clsx from 'clsx';
+import dynamic from 'next/dynamic';
+import { useSearchParams } from 'next/navigation';
+import useSWR from 'swr';
 
 const jakartaSans = Plus_Jakarta_Sans({
   weight: ['600', '500'],
@@ -101,7 +101,10 @@ export const LayoutComponent = ({ children }: { children: ReactNode }) => {
                 <div className="flex flex-col bg-newBgColorInner w-[80px] rounded-[12px]">
                   <div className={clsx("fixed h-full w-[64px] start-[17px] flex flex-1 top-0", user?.admin && 'pt-[60px]')}>
                     <div className="flex flex-col h-full gap-[32px] flex-1 py-[12px]">
-                      <Logo />
+                      <div
+                        className="mt-2 pt-2"
+                      ><Logo />
+                      </div>
                       <TopMenu />
                     </div>
                   </div>
