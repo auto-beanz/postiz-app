@@ -48,6 +48,8 @@ COPY apps/cron/package.json ./apps/cron/
 COPY apps/extension/package.json ./apps/extension/
 COPY apps/sdk/package.json ./apps/sdk/
 COPY apps/commands/package.json ./apps/commands/
+# Ensure Prisma schema is available for postinstall (prisma generate)
+COPY libraries/nestjs-libraries/src/database/prisma ./libraries/nestjs-libraries/src/database/prisma
 
 # Install dependencies with cache mount
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
