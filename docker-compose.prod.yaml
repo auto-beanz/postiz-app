@@ -11,6 +11,10 @@ services:
         SENTRY_ORG: "${SENTRY_ORG:-}"
         SENTRY_PROJECT: "${SENTRY_PROJECT:-}"
         SENTRY_AUTH_TOKEN: "${SENTRY_AUTH_TOKEN:-}"
+      cache_from:
+        - type=registry,ref=ghcr.io/auto-beanz/postiz-cache:latest
+      cache_to:
+        - type=inline
     container_name: postiz
     restart: always
     env_file:
