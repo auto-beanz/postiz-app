@@ -5,6 +5,19 @@
 
 set -e
 
+# Check if we need sudo for Docker commands
+DOCKER_CMD="docker"
+if ! docker ps >/dev/null 2>&1; then
+    if sudo docker ps >/dev/null 2>&1; then
+        echo "ℹ️  Docker requires sudo privileges"
+        DOCKER_CMD="sudo docker"
+    else
+        echo "❌ Error: Cannot access Docker daemon"
+        echo "Please ensure Docker is running and you have permissions"
+        exit 1
+    fi
+fi
+
 echo "======================================"
 echo "Postiz Deployment Script"
 echo "======================================"
@@ -37,6 +50,14 @@ if ! docker compose version &> /dev/null; then
 fi
 
 echo "✅ Docker Compose is available"
+
+# Set up docker compose command with sudo if needed
+if [ "$DOCKER_CMD" = "sudo docker" ]; then
+    COMPOSE_CMD="sudo docker compose"
+else
+    COMPOSE_CMD="docker compose"
+fi
+
 echo ""
 
 # Ask user what they want to do
@@ -54,39 +75,39 @@ case $choice in
     1)
         echo ""
         echo "🔨 Building and starting Postiz..."
-        docker compose -f docker-compose.prod.yaml up -d --build
+        $COMPOSE_CMD -f docker-compose.prod.yaml up -d --build
         echo ""
         echo "✅ Build complete! Waiting for services to be healthy..."
         sleep 10
-        docker compose -f docker-compose.prod.yaml ps
+        $COMPOSE_CMD -f docker-compose.prod.yaml ps
         echo ""
         echo "🎉 Postiz is now running!"
         echo "📍 Access it at: http://localhost:5000"
-        echo "📝 View logs: docker compose -f docker-compose.prod.yaml logs -f"
+        echo "📝 View logs: $COMPOSE_CMD -f docker-compose.prod.yaml logs -f"
         ;;
     2)
         echo ""
         echo "▶️  Starting Postiz containers..."
-        docker compose -f docker-compose.prod.yaml up -d
+        $COMPOSE_CMD -f docker-compose.prod.yaml up -d
         echo ""
         echo "✅ Containers started!"
-        docker compose -f docker-compose.prod.yaml ps
+        $COMPOSE_CMD -f docker-compose.prod.yaml ps
         ;;
     3)
         echo ""
         echo "⏹️  Stopping Postiz containers..."
-        docker compose -f docker-compose.prod.yaml down
+        $COMPOSE_CMD -f docker-compose.prod.yaml down
         echo "✅ Containers stopped!"
         ;;
     4)
         echo ""
         echo "📋 Showing logs (Ctrl+C to exit)..."
-        docker compose -f docker-compose.prod.yaml logs -f
+        $COMPOSE_CMD -f docker-compose.prod.yaml logs -f
         ;;
     5)
         echo ""
         echo "🔄 Restarting Postiz containers..."
-        docker compose -f docker-compose.prod.yaml restart
+        $COMPOSE_CMD -f docker-compose.prod.yaml restart
         echo "✅ Containers restarted!"
         ;;
     6)
@@ -94,7 +115,7 @@ case $choice in
         read -p "⚠️  This will remove all containers and volumes. Are you sure? (yes/no): " confirm
         if [ "$confirm" = "yes" ]; then
             echo "🧹 Cleaning up..."
-            docker compose -f docker-compose.prod.yaml down -v
+            $COMPOSE_CMD -f docker-compose.prod.yaml down -v
             echo "✅ Cleanup complete!"
         else
             echo "Cancelled."

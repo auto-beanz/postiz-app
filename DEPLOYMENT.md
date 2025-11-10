@@ -9,6 +9,19 @@ This guide walks you through deploying the Postiz monorepo application on your o
 - At least 4GB RAM and 20GB disk space
 - Ports 5000 (or your chosen port) open in firewall
 
+## Installation on VM
+### Install Docker and Docker Compose
+```bash
+sudo apt update
+sudo apt install -y docker.io docker-compose-v2
+```
+
+### Start Docker
+```bash
+sudo systemctl start docker
+sudo systemctl enable docker
+```
+
 ## Quick Start
 
 ### 1. Clone the Repository
