@@ -351,3 +351,19 @@ See `.env` file for all available configuration options including:
 - Payment settings (Stripe)
 - OAuth providers
 - Short link services
+
+## Architecture
+
+```
+Internet
+   ↓
+Azure NSG (Allow 80/443)
+   ↓
+Azure VM Firewall (UFW)
+   ↓
+NGINX (Port 80/443) ← SSL Certificate
+   ↓
+Docker Container (Port 5000)
+   ↓
+Internal: Frontend (4200), Backend (3000)
+```
